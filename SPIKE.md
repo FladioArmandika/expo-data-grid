@@ -92,8 +92,15 @@ These came out of checking the installed `expo-modules-core` 58.0.29 source and 
 7. **`create-expo-module` 58.0.3 with template 58.0.9 has no `tsconfig.json`,** so its `prepare` step fails and it never creates the example. I added a strict `tsconfig.json` and made the example with `create-expo-app` (blank-typescript, SDK 58), then applied the same app.json and package.json changes `create-expo-module` would have made.
 8. **ProMotion.** The example sets `CADisableMinimumFrameDurationOnPhone` so iPhones can reach 120 Hz. Without it, every candidate tops out at 60.
 
-## What isn't verified yet
+## Build status
 
-Nothing native has been compiled on iOS, and Android candidates B and C haven't been compiled: the cloud machine this was written on has no Xcode and can't reach Google's Maven repository. Android A, the overlay, the host view and the data store were type-checked against Android 16 framework classes with stand-ins for the few Expo types they use, and the layout math and number formatter have JVM unit tests (`android/src/test`). Expect a round of compile fixes on the first `expo run:ios` and `expo run:android`.
+Built and run in debug on 1 Nov 2026 (Xcode 26.4.1, AGP 9.2.1, Kotlin 2.2.0, NDK 27.1):
+
+- iOS, iPhone 17 Pro simulator (iOS 26.4): A and B draw the frozen header and first column and scroll both ways. B first drew cells on black because an opaque layer's backing store hides `backgroundColor`; fixed by painting the background in `draw(in:)`.
+- Android, API 35 emulator: A, B and C draw and scroll both ways. B first showed wrong numbers because `TextView.setText(char[], ...)` keeps the array and every cell shared one; each cell now has its own buffer.
+
+Nothing has been measured on a physical device or in a release build yet.
+
+Local setup notes: `pod install` needs `LANG=en_US.UTF-8`, and a machine with no emulator needs an AVD created first.
 
 Spike-only dependencies, to drop once a candidate wins: `androidx.recyclerview` (B) and Compose foundation/ui plus the Compose compiler plugin (C).
