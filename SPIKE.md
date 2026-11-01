@@ -96,7 +96,7 @@ These came out of checking the installed `expo-modules-core` 58.0.29 source and 
 
 Built and run in debug on 1 Nov 2026 (Xcode 26.4.1, AGP 9.2.1, Kotlin 2.2.0, NDK 27.1):
 
-- iOS, iPhone 17 Pro simulator (iOS 26.4): A and B draw the frozen header and first column and scroll both ways. B first drew cells on black because an opaque layer's backing store hides `backgroundColor`; fixed by painting the background in `draw(in:)`.
+- iOS, iPhone 17 Pro simulator (iOS 26.4): A and B draw the frozen header and first column. B scrolls both ways; A was seen scrolling horizontally, vertical scrolling on A is not confirmed yet. B first drew cells on black because an opaque layer's backing store hides `backgroundColor`; fixed by painting the background in `draw(in:)`.
 - Android, API 35 emulator: A, B and C draw and scroll both ways. B first showed wrong numbers because `TextView.setText(char[], ...)` keeps the array and every cell shared one; each cell now has its own buffer.
 
 Nothing has been measured on a physical device or in a release build yet.
