@@ -1,18 +1,48 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    // Compose is only here for spike candidate C. Drop it if C loses.
+    classpath("org.jetbrains.kotlin.plugin.compose:org.jetbrains.kotlin.plugin.compose.gradle.plugin:${kotlinVersion}")
+  }
+}
+
 plugins {
   id 'com.android.library'
   id 'expo-module-gradle-plugin'
 }
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 
 group = 'expo.modules.datagrid'
 version = '0.0.1'
 
 android {
   namespace "expo.modules.datagrid"
+  if (rootProject.ext.has("ndkVersion")) {
+    ndkVersion rootProject.ext.ndkVersion
+  }
   defaultConfig {
     versionCode 1
     versionName "0.0.1"
   }
+  buildFeatures {
+    compose true
+  }
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+    }
+  }
   lintOptions {
     abortOnError false
   }
+}
+
+dependencies {
+  // Spike candidate B
+  implementation 'androidx.recyclerview:recyclerview:1.4.0'
+  // Spike candidate C
+  implementation 'androidx.compose.foundation:foundation-android:1.12.1'
+  implementation 'androidx.compose.ui:ui-android:1.12.1'
 }
