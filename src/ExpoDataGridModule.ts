@@ -1,11 +1,12 @@
 import { NativeModule, requireNativeModule } from 'expo';
 
-import type { ExpoDataGridModuleSharedObject } from './ExpoDataGridModuleSharedObject';
+import type { DeviceInfo } from './ExpoDataGrid.types';
+import type { GridData } from './GridData';
 
 declare class ExpoDataGridModule extends NativeModule<{}> {
-  hello(): string;
-  setValueAsync(value: string): Promise<void>;
-  ExpoDataGridModuleSharedObject: typeof ExpoDataGridModuleSharedObject;
+  GridData: typeof GridData;
+  getDeviceInfo(): DeviceInfo;
+  getResidentMemoryMB(): number;
 }
 
 export default requireNativeModule<ExpoDataGridModule>('ExpoDataGrid');

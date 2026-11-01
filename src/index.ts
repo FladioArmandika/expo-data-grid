@@ -1,6 +1,6 @@
-// Reexport the native module. On web, it will be resolved to ExpoDataGridModule.web.ts
-// and on native platforms to ExpoDataGridModule.ts
-export { default } from './ExpoDataGridModule';
-export { default as ExpoDataGridView } from './ExpoDataGridView';
+export { default as ExpoDataGridModule } from './ExpoDataGridModule';
 export * from './ExpoDataGrid.types';
-export * from './ExpoDataGridModuleSharedObject';
+export * from './GridData';
+export * from './SpikeGridView';
+export * from './encoders';
+export * from './loadBenchmark';
