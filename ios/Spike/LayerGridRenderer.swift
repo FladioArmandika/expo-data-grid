@@ -10,6 +10,7 @@ final class GridCellLayer: CALayer {
   var row = 0
   var col = 0
   var negative = false
+  private var fill: CGColor = UIColor.white.cgColor
   private(set) var generation = 0
   private(set) var drawnGeneration = -1
 
@@ -34,7 +35,7 @@ final class GridCellLayer: CALayer {
     self.col = col
     self.text = text
     self.negative = negative
-    backgroundColor = background
+    fill = background
     generation += 1
     setNeedsDisplay()
   }
@@ -42,6 +43,10 @@ final class GridCellLayer: CALayer {
   var isDrawnCurrent: Bool { drawnGeneration == generation && !isHidden }
 
   override func draw(in ctx: CGContext) {
+    // The layer is opaque, so its backing store isn't cleared before drawing and covers
+    // backgroundColor. Paint the cell background into the contents ourselves.
+    ctx.setFillColor(fill)
+    ctx.fill(bounds)
     UIGraphicsPushContext(ctx)
     GridStyle.drawCell(text: text, row: row, negative: negative, in: bounds)
     UIGraphicsPopContext()
