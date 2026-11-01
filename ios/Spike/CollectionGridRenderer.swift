@@ -142,7 +142,7 @@ final class GridHeaderCell: UICollectionReusableView {
 
 final class CollectionGridRenderer: UIView, GridRenderer, UICollectionViewDataSource, UICollectionViewDelegate {
   let displayName = "iOS A · UICollectionView"
-  private let layout = FrozenGridLayout()
+  private let layout: FrozenGridLayout
   private let collectionView: UICollectionView
   var benchmarkRunning = false
 
@@ -159,6 +159,8 @@ final class CollectionGridRenderer: UIView, GridRenderer, UICollectionViewDataSo
   }
 
   override init(frame: CGRect) {
+    let layout = FrozenGridLayout()
+    self.layout = layout
     collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
     super.init(frame: frame)
     collectionView.backgroundColor = GridStyle.background

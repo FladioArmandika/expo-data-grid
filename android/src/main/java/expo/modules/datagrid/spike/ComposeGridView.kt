@@ -173,7 +173,7 @@ class ComposeGridView(context: Context) : FrameLayout(context), GridRenderer {
       placedY = oy
 
       layout(w, h) {
-        for (it in items) it.p.place(it.x, it.y, it.z)
+        for (item in items) item.p.place(item.x, item.y, item.z)
       }
     }
   }

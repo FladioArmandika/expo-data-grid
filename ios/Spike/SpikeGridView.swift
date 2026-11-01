@@ -82,7 +82,12 @@ final class SpikeGridView: ExpoView, GridDataListener {
     monitor?.stop()
     renderer?.removeFromSuperview()
 
-    let r: GridRenderer = rendererId == "B" ? LayerGridRenderer(frame: bounds) : CollectionGridRenderer(frame: bounds)
+    let r: GridRenderer
+    if rendererId == "B" {
+      r = LayerGridRenderer(frame: bounds)
+    } else {
+      r = CollectionGridRenderer(frame: bounds)
+    }
     r.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     r.geometry = geometry
     r.data = data
@@ -171,6 +176,7 @@ final class SpikeGridView: ExpoView, GridDataListener {
       "worstFrameMs": s.worstFrameMs,
       "blankAvgPct": s.blankSamples > 0 ? s.blankSum / Double(s.blankSamples) * 100 : 0,
       "blankMaxPct": s.blankMax * 100,
+      "blankFramesPct": s.blankSamples > 0 ? Double(s.blankFrames) / Double(s.blankSamples) * 100 : 0,
       "peakResidentMB": Double(max(s.peakResident, PerfMonitor.residentBytes())) / 1_048_576,
       "timeToFirstFrameMs": monitor.timeToFirstFrameMs ?? -1,
     ])

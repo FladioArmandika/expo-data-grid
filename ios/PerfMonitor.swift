@@ -30,6 +30,8 @@ struct FrameStats {
   var blankSum = 0.0
   var blankMax = 0.0
   var blankSamples = 0
+  /// Frames where more than 1% of the viewport was blank (TableScrollBench's "some").
+  var blankFrames = 0
   var peakResident: UInt64 = 0
   var worstFrameMs = 0.0
 
@@ -129,6 +131,7 @@ final class PerfMonitor {
       stats.elapsed += frameMs / 1000
       stats.blankSum += blank
       stats.blankSamples += 1
+      if blank > 0.01 { stats.blankFrames += 1 }
       stats.blankMax = max(stats.blankMax, blank)
       stats.worstFrameMs = max(stats.worstFrameMs, frameMs)
     }

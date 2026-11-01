@@ -19,6 +19,8 @@ export type BenchmarkResult = {
   worstFrameMs: number;
   blankAvgPct: number;
   blankMaxPct: number;
+  /** Share of frames with more than 1% of the viewport blank. */
+  blankFramesPct: number;
   peakResidentMB: number;
   timeToFirstFrameMs: number;
 };

@@ -118,6 +118,7 @@ export default function App() {
         worstFrameMs: median(runs.map((x) => x.worstFrameMs)),
         blankAvgPct: median(runs.map((x) => x.blankAvgPct)),
         blankMaxPct: median(runs.map((x) => x.blankMaxPct)),
+        blankFramesPct: median(runs.map((x) => x.blankFramesPct)),
         peakResidentMB: median(runs.map((x) => x.peakResidentMB)),
         timeToFirstFrameMs: median(runs.map((x) => x.timeToFirstFrameMs)),
       };
@@ -199,7 +200,7 @@ export default function App() {
         {summary.map((s) => (
           <Text key={s.renderer} style={[styles.mono, { color: fg }]}>
             {s.name} (median of {s.runs}): {s.avgFps.toFixed(1)}/{s.refreshRate.toFixed(0)} fps · drop {s.droppedFrames} · worst{' '}
-            {s.worstFrameMs.toFixed(0)} ms · blank {s.blankAvgPct.toFixed(2)}% (max {s.blankMaxPct.toFixed(2)}%) · {s.peakResidentMB.toFixed(0)} MB · TTFF{' '}
+            {s.worstFrameMs.toFixed(0)} ms · blank {s.blankAvgPct.toFixed(2)}% (max {s.blankMaxPct.toFixed(2)}%, {s.blankFramesPct.toFixed(1)}% of frames) · {s.peakResidentMB.toFixed(0)} MB · TTFF{' '}
             {s.timeToFirstFrameMs.toFixed(0)} ms
           </Text>
         ))}

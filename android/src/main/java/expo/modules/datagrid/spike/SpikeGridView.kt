@@ -201,6 +201,7 @@ class SpikeGridView(context: Context, appContext: AppContext) : ExpoView(context
         "worstFrameMs" to s.worstFrameMs,
         "blankAvgPct" to if (s.blankSamples > 0) s.blankSum / s.blankSamples * 100 else 0.0,
         "blankMaxPct" to s.blankMax * 100,
+        "blankFramesPct" to if (s.blankSamples > 0) s.blankFrames * 100.0 / s.blankSamples else 0.0,
         "peakResidentMB" to maxOf(s.peakResident, PerfMonitor.readResidentBytes()) / 1048576.0,
         "timeToFirstFrameMs" to (m.timeToFirstFrameMs ?: -1.0),
       )

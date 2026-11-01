@@ -47,6 +47,8 @@ class FrameStats {
   var blankSum = 0.0
   var blankMax = 0.0
   var blankSamples = 0
+  /** Frames where more than 1% of the viewport was blank (TableScrollBench's "some"). */
+  var blankFrames = 0
   var peakResident = 0L
   var worstFrameMs = 0.0
 }
@@ -159,6 +161,7 @@ class PerfMonitor(context: Context) : Choreographer.FrameCallback {
       stats.elapsedNanos += dt
       stats.blankSum += blank
       stats.blankSamples++
+      if (blank > 0.01) stats.blankFrames++
       stats.blankMax = max(stats.blankMax, blank)
       stats.worstFrameMs = max(stats.worstFrameMs, dt / 1e6)
       stats.peakResident = max(stats.peakResident, residentBytes)
