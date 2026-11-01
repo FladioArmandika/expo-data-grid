@@ -141,11 +141,11 @@ class RecyclerGridView(context: Context) : FrameLayout(context), GridRenderer {
 
   private class RowHolder(val row: LinearLayout) : RecyclerView.ViewHolder(row) {
     var boundRow = -1
+    // TextView.setText(char[], ...) keeps a reference to the array, so each cell needs its own.
+    val chars = Array(row.childCount) { CharArray(FastNumberFormat.BUFFER_SIZE) }
   }
 
   private inner class RowAdapter(val columns: IntRange, val cellWidth: Int, val rowHeight: Int) : RecyclerView.Adapter<RowHolder>() {
-    private val chars = CharArray(FastNumberFormat.BUFFER_SIZE)
-
     override fun getItemCount(): Int = geometry.rowCount
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RowHolder {
@@ -164,6 +164,7 @@ class RecyclerGridView(context: Context) : FrameLayout(context), GridRenderer {
       holder.row.setBackgroundColor(style.backgroundColor(position, columns.first, frozenCount))
       var i = 0
       for (c in columns) {
+        val chars = holder.chars[i]
         val tv = holder.row.getChildAt(i++) as TextView
         if (d == null) {
           tv.text = ""
